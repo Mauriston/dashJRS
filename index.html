@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Junta Regular de Saúde - Controle</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Carlito:wght@400;700&family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              navy: {
+                primary: '#050F41', 
+                yellow: '#FAB932', 
+                green: '#079551',
+                red: '#B71C1C',
+                neutral: '#f4f4f9',
+              }
+            },
+            fontFamily: {
+              main: ['"Montserrat"', 'sans-serif'],
+              header: ['"Oswald"', 'sans-serif'],
+              body: ['"Carlito"', 'sans-serif'],
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      /* --- VARIÁVEIS E ESTILOS GERAIS LEGADOS --- */
+      :root { 
+          --primary-color: #050F41; 
+          --accent-color: #FAB932; 
+          --success-color: #079551; 
+          --danger-color: #B71C1C;
+          --sidebar-width-collapsed: 70px;
+          --sidebar-width-expanded: 260px;
+      }
+      
+      body { font-family: 'Montserrat', sans-serif; background: #f4f4f9; }
+      
+      /* CLASSES DE ÍCONES (MATERIAL SYMBOLS) - Cópia exata para manter o visual */
+      .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48; }
+
+      .st-blue { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' -25, 'opsz' 48; color: #050F41; font-size: 24px; }
+      .st-blue-heavy { font-variation-settings: 'FILL' 1, 'wght' 700, 'GRAD' 200, 'opsz' 48; color: #050F41; font-size: 24px; }
+      .st-red-acute { font-variation-settings: 'FILL' 0, 'wght' 600, 'GRAD' -25, 'opsz' 24; color: #B71C1C; font-size: 24px; }
+      .st-red { font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 200, 'opsz' 48; color: #B71C1C; font-size: 24px; }
+      .st-red-heavy { font-variation-settings: 'FILL' 1, 'wght' 700, 'GRAD' 200, 'opsz' 40; color: #B71C1C; font-size: 24px; }
+      .st-red-heavy-48 { font-variation-settings: 'FILL' 1, 'wght' 700, 'GRAD' 200, 'opsz' 48; color: #B71C1C; font-size: 24px; } 
+      .st-red-outlined { font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 40; color: #B71C1C; font-size: 24px; } 
+      .st-green { font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 200, 'opsz' 48; color: #079551; font-size: 24px; }
+      .st-green-task { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; color: #079551; font-size: 24px; }
+      .st-green-folder { font-variation-settings: 'FILL' 1, 'wght' 600, 'GRAD' 200, 'opsz' 40; color: #079551; font-size: 24px; }
+      .st-yellow { font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 200, 'opsz' 48; color: #FAB932; font-size: 24px; }
+      .st-yellow-light { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' -25, 'opsz' 48; color: #FAB932; font-size: 24px; }
+      .st-yellow-heavy { font-variation-settings: 'FILL' 1, 'wght' 700, 'GRAD' 200, 'opsz' 48; color: #FAB932; font-size: 24px; }
+      .st-yellow-reply { font-variation-settings: 'FILL' 0, 'wght' 700, 'GRAD' 200, 'opsz' 40; color: #FAB932; font-size: 24px; }
+      .st-gray { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48; color: #999; font-size: 24px; }
+
+      .act-green { font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 200, 'opsz' 48; color: #079551; font-size: 22px; }
+      .act-yellow { font-variation-settings: 'FILL' 0, 'wght' 700, 'GRAD' 0, 'opsz' 40; color: #FAB932; font-size: 22px; }
+      .act-blue { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48; color: #050F41; font-size: 22px; }
+      .act-red { font-variation-settings: 'FILL' 1, 'wght' 700, 'GRAD' 200, 'opsz' 24; color: #B71C1C; font-size: 22px; }
+      .act-reply { font-variation-settings: 'FILL' 0, 'wght' 700, 'GRAD' 0, 'opsz' 24; color: #FAB932; font-size: 22px; }
+
+      .double-icon-container { display: inline-flex; align-items: center; gap: 2px; justify-content: center; }
+
+      /* Scrollbar */
+      .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+      .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; }
+      .custom-scrollbar::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+      .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #999; }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@18.2.0",
+    "react/": "https://esm.sh/react@18.2.0/",
+    "react-dom": "https://esm.sh/react-dom@18.2.0",
+    "react-dom/": "https://esm.sh/react-dom@18.2.0/",
+    "lucide-react": "https://esm.sh/lucide-react@0.263.1",
+    "recharts": "https://esm.sh/recharts@2.12.7?external=react,react-dom"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>

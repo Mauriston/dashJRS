@@ -1,0 +1,5 @@
+{
+  "name": "Sistema de Controle de Inspeção de Saúde - Marinha do Brasil",
+  "description": "Sistema de gerenciamento CRUD para controle de inspeções de saúde, seguindo as diretrizes visuais da Marinha do Brasil.",
+  "requestFramePermissions": []
+}
