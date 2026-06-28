@@ -413,13 +413,13 @@ function App() {
              <Dashboard records={records} />
         ) : (
             <>
-                <div className="bg-navy-primary text-white p-5 rounded-lg mb-5 flex justify-center items-center"><div className="text-center"><h1 className="font-main font-black text-[32px] uppercase m-0">INSPEÇÕES DE SAÚDE</h1></div></div>
+                <div className="bg-navy-primary text-white p-4 md:p-5 rounded-lg mb-5 flex justify-center items-center"><div className="text-center"><h1 className="font-main font-black text-xl md:text-[32px] uppercase m-0">INSPEÇÕES DE SAÚDE</h1></div></div>
 
                 {viewMode === 'list' && (<div className="flex gap-2.5 mb-4 overflow-x-auto pb-1.5"><Chip type="all" label="Todos" count={counts.all} /><Chip type="agendada" label="Agendadas" count={counts.agendada} /><Chip type="concluida" label="Concluídas" count={counts.concluida} /><Chip type="faltas" label="Faltas" count={counts.faltas} /><Chip type="canceladas" label="Canceladas" count={counts.canceladas} /><Chip type="conclusao_pendente" label="Conclusões Pendentes" count={counts.conclusao_pendente} isAlert={true} /><Chip type="msg_pendente" label="MSG Pendentes" count={counts.msg_pendente} isAlert={true} /></div>)}
 
-                <div className="bg-white p-5 rounded-lg shadow-sm mb-5 flex flex-wrap gap-4 items-center justify-between border border-gray-100">
-                    <div className="flex gap-4 items-center flex-wrap">
-                        <div className="relative w-[250px]">
+                <div className="bg-white p-4 md:p-5 rounded-lg shadow-sm mb-5 flex flex-wrap gap-4 items-center justify-between border border-gray-100">
+                    <div className="flex gap-3 md:gap-4 items-center flex-wrap w-full md:w-auto">
+                        <div className="relative w-full sm:w-[250px]">
                             <span className="material-symbols-outlined absolute left-2.5 top-2.5 text-gray-400 pointer-events-none text-[20px]">search</span>
                             <input type="text" placeholder="Buscar por nome..." autoComplete="off" className="w-full pl-9 pr-2.5 py-2.5 border border-gray-300 rounded font-main box-border text-sm focus:border-navy-primary outline-none" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
                         </div>
@@ -429,15 +429,17 @@ function App() {
                         </div>)}
                         <div className="flex bg-gray-100 p-1 rounded"><button onClick={() => setViewMode('list')} className={`flex items-center gap-1 px-3 py-1.5 rounded text-xs font-bold uppercase transition ${viewMode === 'list' ? 'bg-white shadow text-navy-primary' : 'text-gray-500'}`}><span className="material-symbols-outlined text-[18px]">list</span> Lista</button><button onClick={() => setViewMode('calendar')} className={`flex items-center gap-1 px-3 py-1.5 rounded text-xs font-bold uppercase transition ${viewMode === 'calendar' ? 'bg-white shadow text-navy-primary' : 'text-gray-500'}`}><span className="material-symbols-outlined text-[18px]">calendar_month</span> Calendário</button></div>
                     </div>
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 w-full md:w-auto justify-end">
                         <button onClick={() => { setIsLoading(true); localStorage.clear(); loadData(); }} className="h-[40px] px-4 border border-gray-300 rounded text-gray-600 hover:bg-gray-50 flex items-center gap-2 text-[13px] font-bold uppercase" title="Forçar atualização (Limpa Cache)"><span className={`material-symbols-outlined text-[20px] ${isLoading ? 'animate-spin' : ''}`}>refresh</span></button>
-                        {viewMode === 'list' && (<button onClick={handleAdd} className="h-[40px] px-5 bg-navy-primary text-white rounded hover:bg-[#0a1a7a] flex items-center gap-2 text-[13px] font-bold uppercase transition shadow-sm"><span className="material-symbols-outlined text-[20px]">add</span> Nova Inspeção</button>)}
+                        {viewMode === 'list' && (<button onClick={handleAdd} className="h-[40px] px-4 md:px-5 bg-navy-primary text-white rounded hover:bg-[#0a1a7a] flex items-center gap-2 text-[13px] font-bold uppercase transition shadow-sm whitespace-nowrap"><span className="material-symbols-outlined text-[20px]">add</span> Nova Inspeção</button>)}
                     </div>
                 </div>
 
                 <div className="bg-white rounded-lg shadow-sm overflow-x-auto min-h-[400px] border border-gray-100">
                     {isLoading && records.length === 0 ? (<LoadingSpinner />) : viewMode === 'list' ? (
-                        <table className="w-full border-collapse min-w-[1000px]">
+                      <>
+                        {/* --- TABELA (DESKTOP) --- */}
+                        <table className="hidden md:table w-full border-collapse min-w-[1000px]">
                             <thead><tr><th className="bg-navy-primary text-white text-left p-4 font-semibold uppercase text-xs border-b-[3px] border-navy-yellow whitespace-nowrap w-[90px] text-center">STATUS</th><th className="bg-navy-primary text-white text-left p-4 font-semibold uppercase text-xs border-b-[3px] border-navy-yellow whitespace-nowrap w-[120px]">DATA</th><th className="bg-navy-primary text-white text-left p-4 font-semibold uppercase text-xs border-b-[3px] border-navy-yellow">INSPECIONADO</th><th className="bg-navy-primary text-white text-left p-4 font-semibold uppercase text-xs border-b-[3px] border-navy-yellow">FINALIDADE / AÇÕES</th></tr></thead>
                             <tbody>
                                 {filteredRecords.length === 0 ? (<tr><td colSpan={4} className="p-8 text-center text-gray-500">Nenhum registro encontrado.</td></tr>) : (
@@ -452,6 +454,38 @@ function App() {
                                 )}
                             </tbody>
                         </table>
+
+                        {/* --- LISTA EM CARTÕES (MOBILE) --- */}
+                        <div className="md:hidden divide-y divide-gray-100">
+                            {filteredRecords.length === 0 ? (
+                                <div className="p-8 text-center text-gray-500">Nenhum registro encontrado.</div>
+                            ) : (
+                                filteredRecords.map((r) => (
+                                    <div key={r.id} className="p-4 flex gap-3" onClick={() => handleView(r)}>
+                                        <div className="pt-0.5 shrink-0">{renderStatusIcon(r)}</div>
+                                        <div className="flex-1 min-w-0">
+                                            <div className="font-bold text-gray-800 leading-tight break-words">{r.inspecionado || '—'}</div>
+                                            <div className="text-[11px] text-gray-500 mt-0.5 flex flex-wrap items-center gap-x-1.5 gap-y-1">
+                                                <span>{r.pgq} - {r.nip}</span>
+                                                {r.om && <span className="text-[10px] text-[#777] bg-gray-100 px-1 rounded border border-gray-200">{r.om}</span>}
+                                            </div>
+                                            <div className="text-[12px] text-[#444] font-medium mt-1.5 flex items-center flex-wrap gap-x-2">
+                                                <span>{r.finalidade}</span>
+                                                {r.amp && <span className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${r.amp === 'JRS' ? 'bg-blue-50 text-blue-800' : 'bg-green-50 text-green-800'}`}>{r.amp}</span>}
+                                            </div>
+                                            {r.medico && (<div className="text-[10px] text-navy-primary mt-1 font-semibold flex items-center gap-1"><span className="material-symbols-outlined text-[12px]">stethoscope</span> {r.medico}</div>)}
+                                            <div className="text-[11px] text-gray-400 mt-1.5 flex items-center gap-2">
+                                                <span className="font-bold text-navy-primary">{r.dataEntrevista || r.dataAbertura}</span>
+                                                {r.horaEntrevista && <span>{r.horaEntrevista}</span>}
+                                                <span>· IS {r.isNumber}</span>
+                                            </div>
+                                            <div className="mt-2 flex justify-end" onClick={(e) => e.stopPropagation()}>{renderActionButtons(r)}</div>
+                                        </div>
+                                    </div>
+                                ))
+                            )}
+                        </div>
+                      </>
                     ) : (
                         <CalendarView records={records} onSelectRecord={handleEdit} onSelectDate={(dateStr) => { setEditingRecord({ id: '', isNumber: '', dataAbertura: new Date().toLocaleDateString('pt-BR'), dataEntrevista: dateStr, horaEntrevista: '07:30', finalidade: '', amp: '', medico: '', om: '', pgq: '', nip: '', inspecionado: '', statusIS: 'IS aberta', dataLaudo: '', laudo: '', observacoes: '', restricoes: '', tis: '', ds1a: '', msg: '' }); setIsModalOpen(true); }} />
                     )}
