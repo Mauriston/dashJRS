@@ -188,35 +188,35 @@ export const CalendarView: React.FC<CalendarViewProps> = ({ records, onSelectRec
   // --- RENDERS ---
 
   return (
-    <div className="bg-white rounded-lg shadow border border-gray-200 flex flex-col h-[800px] overflow-hidden">
+    <div className="bg-white rounded-lg shadow border border-gray-200 flex flex-col h-[600px] md:h-[800px] overflow-hidden">
       {/* Header */}
       <div className="flex flex-col border-b border-gray-200 bg-navy-neutral rounded-t-lg">
-        <div className="flex items-center justify-between p-4">
-            <div className="flex items-center gap-4">
+        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between p-3 md:p-4">
+            <div className="flex flex-wrap items-center gap-3 md:gap-4">
                  {view === 'day' && (
                     <button onClick={() => setView('month')} className="p-1 hover:bg-gray-200 rounded text-navy-primary" title="Voltar ao Mês">
                         <ArrowLeft size={20} />
                     </button>
                  )}
-                 <h2 className="text-xl font-bold text-navy-primary font-sans">{headerTitle}</h2>
+                 <h2 className="text-lg md:text-xl font-bold text-navy-primary font-sans">{headerTitle}</h2>
 
                  {/* Filters inline next to Title */}
                  {view === 'month' && (
-                    <div className="flex gap-2 ml-4">
-                        <select 
-                            value={filterAmp} 
+                    <div className="flex gap-2 w-full md:w-auto md:ml-4">
+                        <select
+                            value={filterAmp}
                             onChange={(e) => setFilterAmp(e.target.value)}
-                            className="border p-1.5 rounded text-xs text-navy-primary font-bold focus:outline-none focus:border-navy-primary bg-white min-w-[120px]"
+                            className="border p-1.5 rounded text-xs text-navy-primary font-bold focus:outline-none focus:border-navy-primary bg-white flex-1 md:flex-none md:min-w-[120px]"
                         >
                             <option value="">TODOS AMPS</option>
                             <option value="JRS">JRS</option>
                             <option value="MPI">MPI</option>
                         </select>
 
-                        <select 
-                            value={filterDoctor} 
+                        <select
+                            value={filterDoctor}
                             onChange={(e) => setFilterDoctor(e.target.value)}
-                            className="border p-1.5 rounded text-xs text-navy-primary font-bold focus:outline-none focus:border-navy-primary bg-white min-w-[200px]"
+                            className="border p-1.5 rounded text-xs text-navy-primary font-bold focus:outline-none focus:border-navy-primary bg-white flex-1 md:flex-none md:min-w-[200px]"
                         >
                             <option value="">TODOS MÉDICOS</option>
                             {availableDoctors.map(doc => <option key={doc} value={doc}>{doc}</option>)}
@@ -224,8 +224,8 @@ export const CalendarView: React.FC<CalendarViewProps> = ({ records, onSelectRec
                     </div>
                  )}
             </div>
-            
-            <div className="flex gap-2">
+
+            <div className="flex gap-2 self-end md:self-auto">
             <button onClick={prev} className="p-2 hover:bg-gray-200 rounded-full text-navy-primary transition"><ChevronLeft size={24} /></button>
             <button onClick={goToday} className="px-3 py-1 text-sm font-bold text-navy-primary border border-navy-primary rounded hover:bg-navy-primary hover:text-white transition">HOJE</button>
             <button onClick={next} className="p-2 hover:bg-gray-200 rounded-full text-navy-primary transition"><ChevronRight size={24} /></button>
@@ -234,7 +234,9 @@ export const CalendarView: React.FC<CalendarViewProps> = ({ records, onSelectRec
       </div>
 
       {view === 'month' ? (
-          <>
+          /* Em telas estreitas o grid de 7 colunas rola horizontalmente para manter legibilidade */
+          <div className="flex-grow overflow-x-auto">
+           <div className="min-w-[640px] h-full flex flex-col">
             {/* Custom Grid Header - Sábado e Domingo menores */}
             <div className="grid grid-cols-[0.4fr_1fr_1fr_1fr_1fr_1fr_0.4fr] bg-navy-primary text-white font-bold text-center py-2 text-sm uppercase tracking-wider">
                 <div>Dom</div>
@@ -250,17 +252,17 @@ export const CalendarView: React.FC<CalendarViewProps> = ({ records, onSelectRec
             <div className="grid grid-cols-[0.4fr_1fr_1fr_1fr_1fr_1fr_0.4fr] flex-grow auto-rows-fr bg-gray-200 gap-px border-b border-gray-200 overflow-y-auto">
                 {days.map((date, index) => {
                     const isWeekend = index % 7 === 0 || index % 7 === 6;
-                    
-                    if (!date) return <div key={`empty-${index}`} className={`${isWeekend ? 'bg-gray-100' : 'bg-gray-50'} min-h-[100px]`} />;
+
+                    if (!date) return <div key={`empty-${index}`} className={`${isWeekend ? 'bg-gray-100' : 'bg-gray-50'} min-h-[90px] md:min-h-[100px]`} />;
 
                     const dayEvents = getEventsForDay(date);
                     const isToday = formatDateKey(new Date()) === formatDateKey(date);
                     const isPast = isPastDate(date);
-                    
+
                     return (
-                        <div 
-                        key={index} 
-                        className={`${isWeekend ? 'bg-gray-100' : 'bg-white'} min-h-[100px] p-1 flex flex-col group hover:bg-blue-50 transition relative ${isToday ? 'bg-blue-50' : ''}`}
+                        <div
+                        key={index}
+                        className={`${isWeekend ? 'bg-gray-100' : 'bg-white'} min-h-[90px] md:min-h-[100px] p-1 flex flex-col group hover:bg-blue-50 transition relative ${isToday ? 'bg-blue-50' : ''}`}
                         onClick={() => {
                             setCurrentDate(date);
                             setView('day');
@@ -300,7 +302,8 @@ export const CalendarView: React.FC<CalendarViewProps> = ({ records, onSelectRec
                     );
                 })}
             </div>
-          </>
+           </div>
+          </div>
       ) : (
           /* DAY VIEW OPTIMIZED */
           <div className="flex-grow overflow-y-auto p-4 bg-gray-50 custom-scrollbar">

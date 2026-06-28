@@ -353,8 +353,8 @@ export const RecordForm: React.FC<RecordFormProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 overflow-y-auto pt-10 pb-10">
-      <div className="bg-white rounded-lg shadow-xl w-full max-w-4xl m-4 flex flex-col max-h-full">
+    <div className="fixed inset-0 z-50 flex items-start md:items-center justify-center bg-black bg-opacity-50 overflow-y-auto py-4 md:py-10">
+      <div className="bg-white rounded-lg shadow-xl w-full max-w-4xl m-2 md:m-4 flex flex-col max-h-[95vh] md:max-h-full">
         <div className="flex justify-between items-center p-4 border-b border-gray-200 bg-navy-primary text-white rounded-t-lg">
           <h3 className="text-lg font-bold font-sans flex items-center gap-2">
               {isReadOnly ? <><FileText size={20} /> Detalhamento da Inspeção</> : (initialData ? 'Editar Inspeção de Saúde' : 'Nova Inspeção de Saúde')}
@@ -367,8 +367,8 @@ export const RecordForm: React.FC<RecordFormProps> = ({
 
         {isReadOnly ? (
             /* --- READ ONLY VIEW --- */
-            <div className="p-8 overflow-y-auto bg-gray-50/50">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="p-4 md:p-8 overflow-y-auto bg-gray-50/50">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
                     {/* Header Block */}
                     <div className="col-span-full flex flex-col md:flex-row justify-between items-center bg-white p-4 rounded-lg shadow-sm border border-gray-200 mb-2">
                         <div className="flex flex-col">
@@ -438,7 +438,7 @@ export const RecordForm: React.FC<RecordFormProps> = ({
             </div>
         ) : (
             /* --- EDIT FORM VIEW --- */
-            <form onSubmit={handleSubmit} className="p-6 overflow-y-auto grid grid-cols-1 md:grid-cols-3 gap-4">
+            <form onSubmit={handleSubmit} className="p-4 md:p-6 overflow-y-auto grid grid-cols-1 md:grid-cols-3 gap-4">
                 {/* --- CAMPO DESTAQUE: Nº IS --- */}
                 <div className="flex flex-col md:col-span-1 p-3 bg-blue-50 rounded border border-blue-100">
                     <label className="text-xs font-black text-navy-primary mb-1">Nº IS (Identificador) *</label>

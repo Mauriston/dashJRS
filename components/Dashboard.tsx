@@ -276,9 +276,9 @@ export const Dashboard: React.FC<DashboardProps> = ({ records }) => {
        </div>
 
        {/* --- GRÁFICOS PRINCIPAIS --- */}
-       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-[400px]">
+       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:h-[400px]">
            {/* GRÁFICO COMPARATIVO ANUAL (2/3 da largura) */}
-           <div className="lg:col-span-2 bg-white p-5 rounded-lg shadow-sm border border-gray-100 flex flex-col">
+           <div className="lg:col-span-2 h-[360px] lg:h-auto bg-white p-4 md:p-5 rounded-lg shadow-sm border border-gray-100 flex flex-col">
                <h3 className="font-bold text-navy-primary mb-4 flex items-center gap-2">
                    <span className="material-symbols-outlined">bar_chart</span>
                    COMPARATIVO ANUAL DE INSPEÇÕES
@@ -303,7 +303,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ records }) => {
            </div>
 
            {/* GRÁFICO DE FINALIDADES (1/3 da largura) */}
-           <div className="bg-white p-5 rounded-lg shadow-sm border border-gray-100 flex flex-col">
+           <div className="h-[360px] lg:h-auto bg-white p-4 md:p-5 rounded-lg shadow-sm border border-gray-100 flex flex-col">
                <h3 className="font-bold text-navy-primary mb-4 flex items-center gap-2">
                    <span className="material-symbols-outlined">donut_large</span>
                    PRINCIPAIS FINALIDADES
